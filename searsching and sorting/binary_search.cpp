@@ -24,8 +24,8 @@ int binary( int arr[], int size , int key){
              // mid=(s+e)/2;
         // optimisation
         mid=s+(e-s)/2;    
-        return -1;
     }
+    return -1;
 }
 
 int leftmost(int arr[], int size , int key){
@@ -84,17 +84,73 @@ int  peak(int arr[],int n){
     return s;
 }
 
+int getpivot(int arr[], int size){
+    int s=0;
+    int e=size-1;
+    int mid=s+(e-s)/2;
+    while(s<e){
+        // s<=e not use due to avoid code repetation
+        if(arr[mid]>=arr[0]){
+            s=mid+1;
+        }else{
+            e=mid;
+            // we don't want to loose the edge case when end exist in pivot so instead of mid-1 we use e=mid
+        }
+        mid=s+(e-s)/2;
+    }
+    return s;
+}
+
+int binarys( int arr[], int start ,int end, int key){
+    int s=start;
+    int e=end;
+    int mid=s+(e-s)/2;
+    while(s<=e){
+        if(arr[mid]==key){
+            return mid;
+        }else{
+        if(key>arr[mid]){
+            s=mid+1;
+        }else{
+            e=mid-1;
+        }
+        }
+        mid=s+(e-s)/2;    
+    }
+            return -1;
+}
+
+
+
+int getindexinsortedrotated(int arr[],int size, int key){
+    int pivot=getpivot(arr,size);
+    // cout<<pivot;
+    int s=0;
+    int e=size-1;
+    int mid=s+(e-s)/2;
+    if(key>=arr[pivot] && key<=arr[e]){
+        s=pivot;
+        return binarys(arr,s,e,key);
+    }else{
+        e=pivot-1;
+        return binarys(arr,s,e,key);
+    }
+}
+
+
 
 int main(){
-    int odd[11]={0,1,1,2,2,2,2,3,3,3,3};
-    int even[6]={1,3,5,6,7,1};
+    // int odd[5]={3,7,9,1,2};
+    int even[6]={7,9,0,1,2,3};
     // int oddindex=binary(odd,5,45);
     // int evenindex=binary(even,6,34);
     // cout<<oddindex<<endl<<evenindex;
     // cout<<leftmost(odd,11,3)<<endl;
     // cout<<rightmost(odd,11,3)<<endl;
     // cout<<"total no of occurance is   " <<(rightmost(odd,11,3)-leftmost(odd,11,3))+1<<endl;
-    cout<<peak(even,6)<<endl;
+    // cout<<peak(even,6)<<endl;
+    // cout<<getpivot(odd,6)<<endl;
+    cout<<getindexinsortedrotated(even,6,0);
     return 0;
 
 }
