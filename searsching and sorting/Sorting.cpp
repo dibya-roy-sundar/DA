@@ -33,7 +33,7 @@ void bubblesort(int arr[],int  n){
     }
 }
 void insertionsort(int arr[],int n){
-    for(int i=0;i<n;i++){
+    for(int i=1;i<n-1;i++){
         int j=i-1;
         int temp=arr[i];
         while(j>=0){
