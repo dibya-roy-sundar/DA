@@ -138,21 +138,61 @@ int getindexinsortedrotated(int arr[],int size, int key){
 }
 
 
+double sqrt (long long int n,int precision){
 
-int main(){
-    // int odd[5]={3,7,9,1,2};
-    int even[6]={7,9,0,1,2,3};
-    // int oddindex=binary(odd,5,45);
-    // int evenindex=binary(even,6,34);
-    // cout<<oddindex<<endl<<evenindex;
-    // cout<<leftmost(odd,11,3)<<endl;
-    // cout<<rightmost(odd,11,3)<<endl;
-    // cout<<"total no of occurance is   " <<(rightmost(odd,11,3)-leftmost(odd,11,3))+1<<endl;
-    // cout<<peak(even,6)<<endl;
-    // cout<<getpivot(odd,6)<<endl;
-    cout<<getindexinsortedrotated(even,6,0);
-    return 0;
+long long int s=0;
+
+long long int e=n;
+
+long long int mid=s+(e-s)/2;
+// int ans=-1;
+// optimised due to solve the problem during find greater number's squrae root
+long long int ans=-1;
+while(s<=e){
+    if(mid*mid==n){
+        return mid;
+    }
+    if(mid*mid>n){
+        e=mid-1;
+    }else{
+        ans=mid;
+        s=mid+1;
+    }
+    mid=s+(e-s)/2;
+}
+double factor=1;
+double f_ans=-1;
+for(int i=0;i<precision;i++){
+    factor=factor/10;
+    for(double j=ans;j*j<n;j=j+factor){
+        f_ans=j;
+    }
+}
+return f_ans;
 
 }
-// time complexity : o(logn) base-2
-// sc: o(1);
+
+
+
+
+
+// int main(){
+//     // int odd[5]={3,7,9,1,2};
+//     // int even[6]={7,9,0,1,2,3};
+//     // int oddindex=binary(odd,5,45);
+//     // int evenindex=binary(even,6,34);
+//     // cout<<oddindex<<endl<<evenindex;
+//     // cout<<leftmost(odd,11,3)<<endl;
+//     // cout<<rightmost(odd,11,3)<<endl;
+//     // cout<<"total no of occurance is   " <<(rightmost(odd,11,3)-leftmost(odd,11,3))+1<<endl;
+//     // cout<<peak(even,6)<<endl;
+//     // cout<<getpivot(odd,6)<<endl;
+//     // cout<<getindexinsortedrotated(even,6,0);
+//     double ans=sqrt(37,6);
+//     cout<<ans<<endl;
+//     return 0;
+
+// }
+// // time complexity : o(logn) base-2
+// // sc: o(1);
+

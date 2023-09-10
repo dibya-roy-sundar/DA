@@ -19,7 +19,7 @@ void bubblesort(int arr[],int  n){
             // optimised 
             bool swapped=false;
         for(int j=0;j<n-i;j++){
-            // n-i for decreasing seach space and avoid redundency
+            // n-i for decreasing search space and avoid redundency
             if (arr[j]>arr[j+1]) {
                 swap(arr[j],arr[j+1]);
                 swapped=true;

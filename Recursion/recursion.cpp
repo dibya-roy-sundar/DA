@@ -58,8 +58,7 @@ void reverse(string &s, int i)
         return;
     }
     swap(s[i], s[(s.length() - i - 1)]);
-    i++;
-    reverse(s, i);
+    reverse(s, ++i);
 }
 int checkpalindrome(string &s, int i)
 {
@@ -113,6 +112,37 @@ void bubblesort(int arr[], int n)
     }
     bubblesort(arr, n - 1);
 }
+void selection(int arr[],int n){
+    if(n==0 ||n==1){
+        return ;
+    }
+    int minindex=0;
+    for(int j=1;j<n;j++){
+        if(arr[j]<arr[minindex]){
+            minindex=j;
+        }
+    }
+        swap(arr[0],arr[minindex]);
+        selection(arr+1,n-1);
+}
+void insertion(int arr[],int i,int n){
+    if(i==n){
+        return ;
+    }
+    int temp=arr[i];    
+    int j=i-1;
+    while(j>=0){
+        if(arr[j]>temp){
+            arr[j+1]=arr[j];
+        }else{
+            break;
+        }
+        j--;
+    }
+    arr[j+1]=temp;
+    insertion(arr,++i,n);
+}
+
 void merge(int arr[], int s, int e)
 {
     int mid = s + (e - s) / 2;
@@ -247,7 +277,9 @@ int partition(int arr[], int s, int e)
         // }
         // bubblesort(test,5);
         // mergesort(test, 0, 4);
-        quicksort(test, 0, 4);
+        // quicksort(test, 0, 4);
+        // selection(test,5);
+        insertion(test,0,5);
         for (int i = 0; i < 5; i++)
         {
             cout << test[i];
