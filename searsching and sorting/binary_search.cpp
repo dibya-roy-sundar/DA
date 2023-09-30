@@ -1,4 +1,6 @@
 # include<iostream>
+# include <vector>
+# include <bits/stdc++.h>
 using namespace std;
 int binary( int arr[], int size , int key){
     // condition of binary search is the array should be monotonic function i.e increasing or decreasing
@@ -170,6 +172,49 @@ for(int i=0;i<precision;i++){
 }
 return f_ans;
 
+}
+
+bool isPossible(vector<int> &stalls, int k, int mid, int n) {
+    
+    int cowCount = 1;
+    int lastPos = stalls[0];
+    
+    for(int i=0; i<n; i++ ){
+        
+        if(stalls[i]-lastPos >= mid){
+            cowCount++;
+            if(cowCount==k)
+            {
+                return true;
+            }
+            lastPos = stalls[i];
+        }
+    }
+    return false;
+}
+
+int aggressiveCows(vector<int> &stalls, int k)
+{
+    sort(stalls.begin(), stalls.end());
+    // sorted vector 1 2 3 4 6 
+    int s = 0;
+    int n = stalls.size();//n=5;
+    int e=stalls[n-1];//due to sorted vector stalls ka last element hi stalls vector ka max element hoga
+    int ans = -1;
+    int mid = s + (e-s)/2;
+    
+    while(s<=e) {
+        if(isPossible(stalls, k, mid, n)) {
+            ans = mid;
+            s = mid + 1;
+        }
+        else
+        {
+            e = mid - 1;
+        }
+        mid = s + (e-s)/2;
+    }
+    return ans;
 }
 
 
