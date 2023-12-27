@@ -7,6 +7,8 @@ struct node {
     int data;
     node* left;
     node* right;
+    node* next;
+    node* child;
     
     node(int val) : data(val), left(NULL), right(NULL) {}
 };
@@ -108,3 +110,69 @@ int main() {
     // Clean up memory (you should free the memory allocated for the tree)
     return 0;
 }
+
+
+// void solve(map<int,int>& m, TreeNode<int>* root,int line){
+//     if(m.find(line)==m.end()){
+//             m[line]=root->data;
+//         }
+//      if(root->left){
+//            solve(m,root->left,line-1);
+//         }
+//         if(root->right){
+//            solve(m,root->right,line+1);
+//         }
+// }
+// vector<int> getTopView(TreeNode<int> *root)
+// {   vector<int> ans;
+// if(root==NULL){
+//     return ans;
+// }
+//     // Write your code here.
+//     map<int,int> m;
+//     solve(m,root,0);
+   
+//     for(const auto& it: m){
+//         ans.push_back(it.second);
+//     }
+//     return ans;
+// }
+
+/////////////////// flatten a multilist rowwise////////////////
+ void flattenlist(node* head){
+    if(head==NULL){
+        return ;
+    }
+    node* tail=head;
+    while(tail->next){
+        tail=tail->next;
+    }
+    node* temp;
+    node* curr=head;
+    while(curr!=tail){
+        if(curr->child){
+            tail->next=curr->child;
+            temp=curr->child;
+            while(temp->next){
+                temp=temp->next;
+            }
+            tail=temp;
+        }
+        curr=curr->next;
+    }
+ }
+
+ ////////////////////// flatten a list column wise /////////////////////////////////
+ node* flattenlistcol(node* root){
+    if(root==NULL){
+        return NULL;
+    }
+    node* tail=root;
+    if(root->child){
+        root->next=flattenlistcol(root->child);
+    }
+    if(root->next){
+        tail->next=flattenlistcol(root->next);
+    }
+    return root;
+ }

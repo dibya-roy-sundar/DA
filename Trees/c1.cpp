@@ -206,22 +206,20 @@ bool checkbalanced(node *root)
     }
     int left = maxdepth(root->left);   // left height
     int right = maxdepth(root->right); // right height
-    if ((left - right) <= 1)
+    if ((left - right) <= 1 && (left-right)>=-1)
+    {
+       if (checkbalanced(root->left) && checkbalanced(root->right))
     {
         return 1;
+    }else{
+        return 0;
+    }
     }
     else
     {
         return 0;
     }
-    if (checkbalanced(root->left) && checkbalanced(root->right))
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    };
+    
 }
 int maxi = 0;
 int diameter(node *root)
@@ -253,14 +251,14 @@ bool identical(node *root1, node *root2)
     }
     vector<int> v1 = itrinorder(root1);
     vector<int> v2 = itrinorder(root2);
-    int count = 0;
+    int flag = 0;
     if (v1.size() == v2.size())
     {
         for (int i = 0; i < v1.size(); i++)
         {
             if (v1[i] != v2[i])
             {
-                count++;
+                flag=1;
                 break;
             }
         }
@@ -269,7 +267,7 @@ bool identical(node *root1, node *root2)
     {
         return 0;
     }
-    if (count)
+    if (flag)
     {
         return 0;
     }
@@ -280,22 +278,52 @@ bool identical(node *root1, node *root2)
 }
 vector<vector<int>> zigzag(node *root)
 {
-    vector<vector<int>> ans;
-    vector<vector<int>> temp = levelorder(root);
-    for (int i = 0; i < temp.size(); i++)
-    {
-        if (i % 2 != 0)
-        {
+    // vector<vector<int>> ans;
+    // vector<vector<int>> temp = levelorder(root);
+    // for (int i = 0; i < temp.size(); i++)
+    // {
+    //     if (i % 2 != 0)
+    //     {
 
-            reverse(temp[i].begin(), temp[i].end());
+    //         reverse(temp[i].begin(), temp[i].end());
+    //     }
+    // }
+    // ans = temp;
+    // return ans;
+
+    
+    vector<vector<int>> ans;
+    queue<node *> q;
+    q.push(root);
+    bool LtoR=1;
+    while (!q.empty())
+    {
+        int size = q.size();
+        vector<int> level(size);
+        for (int i = 0; i < size; i++)
+        {
+            node *temp = q.front();
+            q.pop();
+            int index=LtoR?i:(size-i-1);
+            level[index]=temp->data;
+            if (temp->left)
+            {
+                q.push(temp->left);
+            }
+            if (temp->right)
+            {
+                q.push(temp->right);
+            }
+            
         }
+        LtoR=!LtoR;
+        ans.push_back(level);
     }
-    ans = temp;
     return ans;
 }
 void leaf(vector<int> &ans, node *root)
 {
-    // from left to right for anti clockwise
+    // from left to right for anti clockwise    
     if (root == NULL)
     {
         return;
@@ -433,7 +461,7 @@ vector<int> bottomview(node *root)
     {
         node *temp = q.front().first;
         int line = q.front().second;
-        m[line] = temp->data;
+        m[line] = temp->data;//update the value in ley value pair so we  can get latest bottom value 
         q.pop();
         if (temp->left)
         {
@@ -576,6 +604,8 @@ int lowcommancestor(node *root, int a, int b)
         if (v1[i] == v2[i])
         {
             c = v1[i];
+        }else{
+            break ;
         }
     }
     return c;
@@ -1061,6 +1091,29 @@ cur = cur->right;
 }
 
 return preorder;
+}
+node* built(vector<int> inorder,int instart, int inend,vector<int> lvlorder,  map<int,int> m){
+    if(instart>inend){
+        return nullptr;
+    }
+    int inindex=instart;
+    for(int i=instart+1;i<=inend;i++){
+        if(m[inorder[i]]<m[inorder[inindex]]){
+            inindex=i;
+        }
+    }
+    node* root=new node(inorder[inindex]);
+    root->left=built(inorder,instart,inindex-1,lvlorder,m);
+    root->right=built(inorder,inindex+1,inend,lvlorder,m);
+    return root;
+}
+node* buildTreee(vector<int> inorder,vector<int> lvlorder){
+    map<int,int> m;
+    for(int i=0;i<lvlorder.size();i++){
+        m[lvlorder[i]]=i;
+    }
+    node* root=built(inorder,0,inorder.size()-1,lvlorder,   m);
+    return root;
 }
 int main()
 {

@@ -1,4 +1,4 @@
-# include<iostream>
+# include <iostream>
 # include <vector>
 # include <bits/stdc++.h>
 using namespace std;
@@ -8,7 +8,7 @@ int binary( int arr[], int size , int key){
     int s=0;
     int e=size-1;
     // int mid=(s+e)/2;
-    //  oprimisation-if the input array size is grater than the ange of int then this formula would fail 
+    //  optimisation-if the input array size is grater than the range of int then this formula would fail 
     // so we should try new optimise formula
     int mid=s+(e-s)/2;
     while(s<=e){
