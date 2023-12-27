@@ -240,36 +240,7 @@ int diameter(node *root)
     diameter(root->right);
     return maxi;
 }
-int maxs = 0;
-int maxpathsum(node *root)
-{
-    if (root == NULL)
-    {
-        return 0;
-    }
-    int p = 0;
-    if (root->left && root->right)
-    {
-        p = root->data + maxpathsum(root->left) + maxpathsum(root->right);
-    }
-    else if (root->left != NULL && root->right == NULL)
-    {
-        p = root->data + maxpathsum(root->left);
-    }
-    else if (root->right != NULL && root->left == NULL)
-    {
-        p = root->data + maxpathsum(root->right);
-    }
-    else
-    {
-        p = root->data;
-    }
-    if (p > maxs)
-    {
-        maxs = p;
-    }
-    return maxs;
-}
+
 bool identical(node *root1, node *root2)
 {
     if (root1 == NULL && root2 != NULL)
@@ -1037,6 +1008,60 @@ node *buildTre(vector<int> &inorder, vector<int> &postorder)
     }
 
 
+
+vector<int> inorderTraversal(node* root) {//t.c =not an individual n times the while loop runs throughout the combine n terms total will run for n it's near about o(n);
+vector<int> inorder;
+node *cur = root;
+while(cur != NULL) {
+if(cur->left == NULL) {
+inorder.push_back(cur->data);
+cur = cur -> right;
+}
+else {
+node *prev = cur->left;
+while(prev->right && prev->right != cur){
+prev = prev->right;
+}
+if(prev-> right== NULL) {
+prev->right = cur;
+cur = cur->left;
+}else {
+prev->right = NULL;
+inorder. push_back(cur->data);
+cur = cur->right;
+}
+}
+}
+
+return inorder;
+}
+vector<int> preorderTraversal(node* root) {
+vector<int> preorder;
+node *cur = root;
+while(cur != NULL) {
+if(cur->left == NULL) {
+preorder. push_back(cur->data);
+cur = cur -> right;
+}
+else {
+node *prev = cur->left;
+while(prev->right && prev->right != cur){
+prev = prev->right;
+}
+if(prev-> right== NULL) {
+prev->right = cur;
+preorder. push_back(cur->data);
+cur = cur->left;
+}else {
+prev->right = NULL;
+
+cur = cur->right;
+}
+}
+}
+
+return preorder;
+}
 int main()
 {
     node *root = new node(1); // creating a root node of the tree with value as '1'
@@ -1168,9 +1193,14 @@ int main()
     // }
     // }
     // cout << burntree(root, 6);
-    string s = serialize(root);
-    for (int i = 0; i < s.length(); i++)
-    {
-        cout << s[i];
-    }
+    // string s = serialize(root);
+    // for (int i = 0; i < s.length(); i++)
+    // {
+    //     cout << s[i];
+    // }
+
+    
+
+
+    return 0;
 }
