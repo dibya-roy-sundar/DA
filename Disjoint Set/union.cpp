@@ -49,10 +49,10 @@ void unionBySize (int u,int v){
     }
     if(size[up_u]<size[up_v]){
         parent[up_u]=up_v;
-         size[up_v]++;
+         size[up_v]+=size[up_u];
     }else{
         parent[up_v]=up_u;
-        size[up_u]++;
+        size[up_u]+=size[up_v];
     }
 
 }
