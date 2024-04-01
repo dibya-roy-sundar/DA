@@ -2,9 +2,9 @@
 #include<cstring>
 #include <queue>
 using namespace std;
-#define V 6
+int V;
 
-int bfs(int rgraph[V][V],int s , int t,int parent[]){
+int bfs(vector<vector<int>> rgraph,int s , int t,int parent[]){
     queue<int> q;
     int vis[V]={0};
     q.push(s);
@@ -36,9 +36,10 @@ int bfs(int rgraph[V][V],int s , int t,int parent[]){
 
 }
 
-int fordFulkerson(int graph[V][V],int s , int t){
+int fordFulkerson(vector<vector<int>> graph,int s , int t){
     // we have to secure original data , we have to form a residual graph from original data
-        int rgraph[V][V];
+        vector<vector<int>> rgraph(V,vector<int> (V));
+        // int rgraph[V][V];
         for(int i=0;i<V;i++){
             for(int j=0;j<V;j++){
                 rgraph[i][j]=graph[i][j];
@@ -91,35 +92,37 @@ int fordFulkerson(int graph[V][V],int s , int t){
 
 
 int main(){
-    // int u,k;
-    // cout<<"enter your graph size"<<endl;
-    // cin>>u,k;
-    // int graph[u][k]={0};
-    // // memset(graph ,0 , sizeof(graph));
-    // while(u){
-    //     cout<<"enter "<<u <<" row details"<<endl;
-    //     for(int i=0;i<k;i++){
-    //         int x;
-    //         cout<<"enter x"<<endl;
-    //         cin>>x;
-    //         graph[u][i]=x;
+    int E;
+    cin>>V;
+    cin>>E;
+    vector<vector<int>> graph(V,vector<int>(V,0));
+    // int **graph=new int*[V];
 
+    // for(int i=0;i<V;i++){
+    //     graph[i]=new int[V];
+    //     for(int j=0;j<V;j++){
+    //         graph[i][j]=0;
     //     }
-
-    //     u--;
     // }
-    // int s,t;
-    // cout<<"Enter source"<<endl;
-    // cin>>s;
-    // cout<<"Enter Sink"<<endl;
-    // cin>>t;
-    int graph[V][V]
-        = { { 0, 16, 13, 0, 0, 0 }, { 0, 0, 10, 12, 0, 0 },
-            { 0, 4, 0, 0, 14, 0 },  { 0, 0, 9, 0, 0, 20 },
-            { 0, 0, 0, 7, 0, 4 },   { 0, 0, 0, 0, 0, 0 } };
+
+    for(int i=0;i<E;i++){
+        int u,v,wt;
+        cin>>u>>v>>wt;
+        graph[u][v]=wt;
+    }
+    
+    int s,t;
+    cout<<"Enter source"<<endl;
+    cin>>s;
+    cout<<"Enter Sink"<<endl;
+    cin>>t;
+    // int graph[V][V]
+    //     = { { 0, 16, 13, 0, 0, 0 }, { 0, 0, 10, 12, 0, 0 },
+    //         { 0, 4, 0, 0, 14, 0 },  { 0, 0, 9, 0, 0, 20 },
+    //         { 0, 0, 0, 7, 0, 4 },   { 0, 0, 0, 0, 0, 0 } };
  
     cout << "The maximum possible flow is "
-         << fordFulkerson(graph, 0, 5);
+         << fordFulkerson(graph, s, t);
 
     return 0;
 }
