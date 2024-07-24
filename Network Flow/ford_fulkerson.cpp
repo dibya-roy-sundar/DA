@@ -47,10 +47,7 @@ int dfs(vector<vector<int>>& graph,int t,int parent[],int node,vector<int>& vis)
         if( !vis[i] && graph[node][i]>0){
             parent[i]=node;
            if(dfs(graph,t,parent,i,vis)){
-            // reset vis array for next round;
-            for(int i=0;i<V;i++){
-                vis[i]=0;
-            }
+            vis[node]=0;
             return true;
            } 
            vis[i]=0;
@@ -115,10 +112,10 @@ int fordFulkerson(vector<vector<int>> graph,int s , int t){
     //  a part of our new augmented path
 
 
-    // reset parent array for next dfs 
-    // for(int i=0;i<V;i++){
-    //         parent[i]=-1;
-    //     }
+    // reset vis array for next round;
+            // for(int i=0;i<V;i++){
+            //     vis[i]=0;
+            // }
     }
 
     return maxflow; 
